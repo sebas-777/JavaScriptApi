@@ -1,14 +1,30 @@
+// Method Get
 async function listarVideos() {
-    const conexion = await fetch('http://localhost:3002/videos');
+    const conexion = await fetch('http://localhost:3000/videos');
     const conexionCovertida = await conexion.json();
     
-    //console.log(conexionCovertida);
+    
     return conexionCovertida
     
 } 
 
-export const conexionApi={
-    listarVideos
+// Method Post
+async function enviarVideo(titulo,descripcion,url,imagen) {
+    const conexion = await fetch('http://localhost:3000/videos',{
+        method:"POST",
+        headers:{"Content-type":"application/json"},
+        body:JSON.stringify({
+            titulo:titulo,
+            descripcion:`${descripcion} mil visualizaciones`,
+            url:url,
+            imagen:imagen
+        })
+    })
+    const conexionCovertida = conexion.json();
+    return conexionCovertida;
 }
 
-listarVideos();
+export const conexionApi={
+    listarVideos,enviarVideo
+}
+
