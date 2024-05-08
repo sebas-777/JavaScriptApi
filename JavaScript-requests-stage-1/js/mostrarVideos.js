@@ -2,7 +2,7 @@ import { conexionApi } from "./conexionApi.js";
 
 const lista = document.querySelector('[data-lista]');
 
-function crearCard(titulo,descripcion,url,imagen) {
+export default function crearCard(titulo,descripcion,url,imagen) {
     const video = document.createElement("li");
     video.className = "videos__item";
     video.innerHTML=` <iframe width="100%" height="72%" src="${url}"
@@ -19,6 +19,8 @@ function crearCard(titulo,descripcion,url,imagen) {
 } 
 
 async function listarVideos() {
+    
+    try {
     const listAPI =  await conexionApi.listarVideos();
 
     listAPI.forEach(video => lista.appendChild(crearCard(
@@ -27,6 +29,10 @@ async function listarVideos() {
         video.url,
         video.imagen
     )));
+    } catch {
+        lista.innerHTML = `<h2 class = "mensaje_titulo">Ha ocurrido un problema con la conexion :( </h2>`;
+    }
+    
 } 
 
 listarVideos();

@@ -2,8 +2,6 @@
 async function listarVideos() {
     const conexion = await fetch('http://localhost:3000/videos');
     const conexionCovertida = await conexion.json();
-    
-    
     return conexionCovertida
     
 } 
@@ -21,10 +19,21 @@ async function enviarVideo(titulo,descripcion,url,imagen) {
         })
     })
     const conexionCovertida = conexion.json();
+    if(!conexion.ok){
+        throw new Error('Ha ocurrido un error al enviar el video');
+    }
+
     return conexionCovertida;
 }
 
+async function buscarVideos(palabraClave) { 
+    const conexion = await fetch(`http://localhost:3000/videos?q=${palabraClave}`);
+    const conexionCovertida = conexion.json();
+    console.log(conexionCovertida);
+    return conexionCovertida
+    
+}
 export const conexionApi={
-    listarVideos,enviarVideo
+    listarVideos,enviarVideo,buscarVideos
 }
 
